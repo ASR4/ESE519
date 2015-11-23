@@ -45,7 +45,7 @@ int activateZone(String command)
     //in some cases, an offset time
     int ind1 = command.indexOf(",");
     String zone = command.substring(0,ind1);
-    int ind2 = command.substring(ind1+1,command.length()).indexOf(',');
+    int ind2 = command.indexOf(",",ind1+1);
     if (ind2==0) {
         ind2 = command.length();
     }

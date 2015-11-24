@@ -9,7 +9,10 @@ and replace your-access-token-goes-here with your actual access token-->
   <br>
   <br>
   <form action="https://api.particle.io/v1/devices/310031000d47343432313031/zone?access_token=e33554ac53f2a38ad69bedb4cf6f422742740884" method="POST">
-    Tell your device what to do!<br>
+    Supported Zones are:<br>
+    Rhand, Rtricep, Relbow, Lhand, Ltricep, Lelbow, Lwrist<br>
+    <br>
+    As a comma separated list, put the zone,length of time(in ms)(,time from now to start in ms)<br>
     <br>
     <input type="textbox" name="args" value=""> What zone do you want to activate?
     <br>

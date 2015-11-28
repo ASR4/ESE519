@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+    <span id="Rhand"></span><br>
+    <span id="tstamp"></span>
+
+    <br><br>
+    <button onclick="start()">Connect</button>
+
+    <script type="text/javascript">
+    function start() {
+        document.getElementById("Rhand").innerHTML = "Waiting for data...";
+        var deviceID = "310031000d47343432313031";
+        var accessToken = "e33554ac53f2a38ad69bedb4cf6f422742740884";
+        var eventSource = new EventSource("https://api.particle.io/v1/devices/" + deviceID + "/events/?access_token=" + accessToken);
+        eventSource.addEventListener('open', function(e) {
+            console.log("Opened!"); },false);
+        eventSource.addEventListener('error', function(e) {
+            console.log("Errored!"); },false);
+        eventSource.addEventListener('Rhand', function(e) {
+            var parsedData = JSON.parse(e.data);
+            var tempSpan = document.getElementById("Rhand");
+            var tsSpan   = document.getElementById("tstamp");
+            tempSpan.innerHTML = "Rhand Event\t length: " + parsedData.data + " ms";
+            tempSpan.style.fontSize = "28px";
+            tsSpan.innerHTML = "At timestamp " + parsedData.published_at;
+            tsSpan.style.fontSize = "9px";
+        }, false);
+    }
+    </script>
+</body>
+</html>

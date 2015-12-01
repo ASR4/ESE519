@@ -11,9 +11,6 @@
 #define Ltri2 A2
 #define Lelbow A1
 
-int rhand=0,lhand=0;
-
-
 void setup() {
     pinMode(hand1,OUTPUT);
     pinMode(hand2,OUTPUT);
@@ -29,12 +26,6 @@ void setup() {
     pinMode(Lelbow,OUTPUT);
     Particle.function("function",picker);
     Particle.function("zone",activateZone);
-    Particle.variable("rhand",rhand);
-    Particle.variable("lhand",lhand);
-    Particle.variable("rtri",tricep1);
-    Particle.variable("ltri",Ltri1);
-    Particle.variable("relbow",elbow1);
-    Particle.variable("lelbow",Lelbow);
 }
 
 void loop() {
@@ -80,12 +71,9 @@ int activateZone(String command)
     sprintf(buffer,"%d",length);
     Particle.publish(zone,buffer);
     if(zone=="Rhand"){
-        rhand=1;
         digitalWrite(hand1,HIGH);
         digitalWrite(hand2,HIGH);
-        
         delay(length);
-        rhand=0;
         digitalWrite(hand1,LOW);
         digitalWrite(hand2,LOW);
     } else if(zone=="Rtricep"){

@@ -5,12 +5,12 @@
 #define leftside2  A4
 #define leftside3  A5
 
-#define rightfront1  D0
-#define rightfront2  D1
-#define rightfront3  D2
-#define rightside1  D3
-#define rightside2  D4
-#define rightside3  D5
+#define rightfront1  D2
+#define rightfront2  D3
+#define rightfront3  D4
+#define rightside1  D5
+#define rightside2  D6
+#define rightside3  D7
 
 #define ALLSOLENOIDMASK 0x07
 #define SHOULDERMASK 0x10
@@ -78,6 +78,7 @@ int picker (String command)
     //call of duty actions
     else if (cmd == "Act1") {
         //start vibrators on right
+        Particle.publish("mZone","ft_rt_ht_vi,bk_rt_vi,2000");
         digitalWrite(rightside1,HIGH);
         digitalWrite(rightside2,HIGH);
         digitalWrite(rightside3,HIGH);
@@ -85,10 +86,10 @@ int picker (String command)
         digitalWrite(rightside1,LOW);
         digitalWrite(rightside2,LOW);
         digitalWrite(rightside3,LOW);
-        Particle.publish("mZone","ft_rt_ht_vi,bk_rt_vi,2000");
     }
     else if (cmd=="Act2") {
         //left side everything
+        Particle.publish("mZone","ft_lt_ht_vi,ft_lt_vt_vi,bk_lt_vi,ft_lt_sl,ft_lt_cu,ft_rt_cu,1600");
         digitalWrite(leftside1,HIGH);
         digitalWrite(leftside2,HIGH);
         digitalWrite(leftside3,HIGH);
@@ -122,11 +123,11 @@ int picker (String command)
         digitalWrite(leftfront1,LOW);
         digitalWrite(leftfront2,LOW);
         digitalWrite(leftfront3,LOW);
-        Particle.publish("mZone","ft_lt_ht_vi,ft_lt_vt_vi,bk_lt_vi,ft_lt_sl,ft_lt_cu,ft_rt_cu,1600");
     }
     else if (cmd=="Act4")
     {
         //Danger, all vib, sol, cuffs
+        Particle.publish("mZone","ft_lt_ht_vi,ft_lt_vt_vi,bk_lt_vi,ft_lt_sl,ft_lt_cu,ft_rt_cu,500");
         digitalWrite(leftside1,HIGH);
         digitalWrite(leftside2,HIGH);
         digitalWrite(leftside3,HIGH);
@@ -164,59 +165,59 @@ int picker (String command)
         Wire.beginTransmission(33);
         Wire.write(0);
         Wire.endTransmission();
-        Particle.publish("mZone","ft_lt_ht_vi,ft_lt_vt_vi,bk_lt_vi,ft_lt_sl,ft_lt_cu,ft_rt_cu,500");
         
     }
     else if (cmd=="Act5")
     {
         //death, all solenoids
-        Wire.beginTransmission(32);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        delay(100);
-        Wire.beginTransmission(32);
-        Wire.write(0);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(0);
-        Wire.endTransmission();
-        delay(100);
-        Wire.beginTransmission(32);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        delay(100);
-        Wire.beginTransmission(32);
-        Wire.write(0);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(0);
-        Wire.endTransmission();
-        delay(100);
-        Wire.beginTransmission(32);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        delay(100);
-        Wire.beginTransmission(32);
-        Wire.write(0);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(0);
-        Wire.endTransmission();
-        delay(100);
         Particle.publish("mZone","ft_lt_sl,ft_rt_sl,600");
+        Wire.beginTransmission(32);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        Wire.beginTransmission(33);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        delay(100);
+        Wire.beginTransmission(32);
+        Wire.write(0);
+        Wire.endTransmission();
+        Wire.beginTransmission(33);
+        Wire.write(0);
+        Wire.endTransmission();
+        delay(100);
+        Wire.beginTransmission(32);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        Wire.beginTransmission(33);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        delay(100);
+        Wire.beginTransmission(32);
+        Wire.write(0);
+        Wire.endTransmission();
+        Wire.beginTransmission(33);
+        Wire.write(0);
+        Wire.endTransmission();
+        delay(100);
+        Wire.beginTransmission(32);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        Wire.beginTransmission(33);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        delay(100);
+        Wire.beginTransmission(32);
+        Wire.write(0);
+        Wire.endTransmission();
+        Wire.beginTransmission(33);
+        Wire.write(0);
+        Wire.endTransmission();
+        delay(100);
     }
     else if (cmd=="Act8")
     {
         //Flashbang sensation
+        Particle.publish("mZone","ft_lt_ht_vi,ft_rt_ht_vi,bk_st_ro,300");
         digitalWrite(leftfront1,HIGH);
         digitalWrite(leftfront2,HIGH);
         digitalWrite(leftfront3,HIGH);
@@ -237,13 +238,13 @@ int picker (String command)
         digitalWrite(rightfront1,LOW);
         digitalWrite(rightfront2,LOW);
         digitalWrite(rightfront3,LOW);
-        Particle.publish("mZone","ft_lt_ht_vi,ft_rt_ht_vi,bk_st_ro,300");
     }
     return 0;
 }
 
 void doCreepy()
 {
+    Particle.publish("mZone","neck_ar,200");
     Wire.beginTransmission(33);
     Wire.write(CREEPYMASK);
     Wire.endTransmission();
@@ -251,11 +252,11 @@ void doCreepy()
     Wire.beginTransmission(33);
     Wire.write(0);
     Wire.endTransmission();
-    Particle.publish("mZone","neck_ar,200");
 }
 
 void activateShoulders()
 {
+    Particle.publish("mZone","ft_lt_cu,ft_rt_cu,200");
     Wire.beginTransmission(33);
     Wire.write(SHOULDERMASK);
     Wire.endTransmission();
@@ -263,7 +264,6 @@ void activateShoulders()
     Wire.beginTransmission(33);
     Wire.write(0);
     Wire.endTransmission();
-    Particle.publish("mZone","ft_lt_cu,ft_rt_cu,200");
 }
 
 void bulletshots()
@@ -273,6 +273,7 @@ void bulletshots()
 
 void hugMe()
 {
+    Particle.publish("mZone","ar_ch,3000");
     Wire.beginTransmission(32);
     Wire.write(HUGMASK);
     Wire.endTransmission();
@@ -280,12 +281,12 @@ void hugMe()
     Wire.beginTransmission(32);
     Wire.write(0);
     Wire.endTransmission();
-    Particle.publish("mZone","ar_ch,3000");
 }
 
 void doTickle()
 {
     int shortlength = 20, length=200;
+    Particle.publish("mZone","ft_lt_vt_vi,bk_lt_vi,ft_lt_vt_vi,bk_lt_vi,1300");
     digitalWrite(leftside1,HIGH);
     delay(length);
     digitalWrite(leftside1,LOW);
@@ -310,7 +311,6 @@ void doTickle()
     delay(length);
     digitalWrite(rightside3,LOW);
     delay(shortlength);
-    Particle.publish("mZone","ft_lt_vt_vi,bk_lt_vi,ft_lt_vt_vi,bk_lt_vi,1300");
 }
 
 
@@ -419,9 +419,5 @@ int activateZone(String command)
         Wire.write(0);
         Wire.endTransmission();
     }
-    
-        
-    
     return 0;
-    
 }

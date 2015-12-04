@@ -14,6 +14,7 @@
 
 
 void setup() {
+    Wire.begin();
     pinMode(leftfront1,OUTPUT);
     pinMode(leftfront2,OUTPUT);
     pinMode(leftfront3,OUTPUT);
@@ -31,12 +32,17 @@ void setup() {
 }
 
 void loop() {
+    Wire.beginTransmission(32);
+    Wire.write(0xFF);
+    Wire.endTransmission();
 
 }
 
 int picker (String command)
 {
+    doTickle();
     
+    return 0;
 }
 
 void doTickle()
@@ -49,6 +55,22 @@ void doTickle()
     digitalWrite(leftside2,HIGH);
     delay(length);
     digitalWrite(leftside2,LOW);
+    delay(shortlength);
+    digitalWrite(leftside3,HIGH);
+    delay(length);
+    digitalWrite(leftside3,LOW);
+    delay(shortlength);
+    digitalWrite(rightside1,HIGH);
+    delay(length);
+    digitalWrite(rightside1,LOW);
+    delay(shortlength);
+    digitalWrite(rightside2,HIGH);
+    delay(length);
+    digitalWrite(rightside2,LOW);
+    delay(shortlength);
+    digitalWrite(rightside3,HIGH);
+    delay(length);
+    digitalWrite(rightside3,LOW);
     delay(shortlength);
 }
 
@@ -75,55 +97,52 @@ int activateZone(String command)
     char buffer[200];
     sprintf(buffer,"%d",length);
     Particle.publish(zone,buffer);
-    if(zone=="leftfront1"){
+    if (zone=="front_left_horz_vibrators"){
         digitalWrite(leftfront1,HIGH);
-        delay(length);
-        digitalWrite(leftfront1,LOW);
-    } else if(zone=="leftfront2"){
         digitalWrite(leftfront2,HIGH);
-        delay(length);
-        digitalWrite(leftfront2,LOW);
-    } else if(zone=="leftfront3"){
         digitalWrite(leftfront3,HIGH);
         delay(length);
+        digitalWrite(leftfront1,LOW);
+        digitalWrite(leftfront2,LOW);
         digitalWrite(leftfront3,LOW);
-    } if(zone=="leftside1"){
+    } if(zone=="front_left_vert_vibrators" || zone=="back_left_vibrators"){
         digitalWrite(leftside1,HIGH);
-        delay(length);
-        digitalWrite(leftside1,LOW);
-    } else if(zone=="leftside2"){
         digitalWrite(leftside2,HIGH);
-        delay(length);
-        digitalWrite(leftside2,LOW);
-    } else if(zone=="leftside3"){
         digitalWrite(leftside3,HIGH);
         delay(length);
+        digitalWrite(leftside1,LOW);
+        digitalWrite(leftside2,LOW);
         digitalWrite(leftside3,LOW);
-    } else if(zone=="rightfront1"){
+    } else if(zone=="front_right_horz_vibrators"){
         digitalWrite(rightfront1,HIGH);
-        delay(length);
-        digitalWrite(rightfront1,LOW);
-    } else if(zone=="rightfront2"){
         digitalWrite(rightfront2,HIGH);
-        delay(length);
-        digitalWrite(rightfront2,LOW);
-    } else if(zone=="rightfront3"){
         digitalWrite(rightfront3,HIGH);
         delay(length);
+        digitalWrite(rightfront1,LOW);
+        digitalWrite(rightfront2,LOW);
         digitalWrite(rightfront3,LOW);
-    } if(zone=="rightside1"){
+    } else if(zone=="front_right_vert_vibrators" || zone=="back_right_vibrators"){
         digitalWrite(rightside1,HIGH);
-        delay(length);
-        digitalWrite(rightside1,LOW);
-    } else if(zone=="rightside2"){
         digitalWrite(rightside2,HIGH);
-        delay(length);
-        digitalWrite(rightside2,LOW);
-    } else if(zone=="rightside3"){
         digitalWrite(rightside3,HIGH);
         delay(length);
+        digitalWrite(rightside1,LOW);
+        digitalWrite(rightside2,LOW);
         digitalWrite(rightside3,LOW);
-    } 
+    } else if (zone=="front_left_sole") {
+        
+    } else if (zone=="front_right_sole") {
+        
+    } else if (zone=="front_left_cuff") {
+        
+    } else if (zone=="front_right_cuff") {
+        
+    } else if (zone=="air_channel") {
+        
+    } else if (zone=="back_soft_robotics") {
+        
+    }
+    
         
     
     return 0;

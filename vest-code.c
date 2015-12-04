@@ -371,29 +371,53 @@ int activateZone(String command)
         digitalWrite(rightside2,LOW);
         digitalWrite(rightside3,LOW);
     } else if (zone=="ft_lt_sl") {
-        // Wire.beginTransmission(32);
-        // Wire.write(0xFF);
-        // Wire.endTransmission();
+        Wire.beginTransmission(32);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        delay(length);
+        Wire.beginTransmission(32);
+        Wire.write(0);
+        Wire.endTransmission();
     } else if (zone=="ft_rt_sl") {
-        // Wire.beginTransmission(33);
-        // Wire.write(0xFF);
-        // Wire.endTransmission();        
+        Wire.beginTransmission(33);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission(); 
+        delay(length);
+        Wire.beginTransmission(33);
+        Wire.write(0);
+        Wire.endTransmission();
     } else if (zone=="ft_lt_cu") {
-        // Wire.beginTransmission(32);
-        // Wire.write(0xFF);
-        // Wire.endTransmission();        
+        Wire.beginTransmission(32);
+        Wire.write(SHOULDERMASK);
+        Wire.endTransmission(); 
+        delay(length);
+        Wire.beginTransmission(32);
+        Wire.write(0);
+        Wire.endTransmission();
     } else if (zone=="ft_rt_cu") {
-        // Wire.beginTransmission(33);
-        // Wire.write(0xFF);
-        // Wire.endTransmission();        
+        Wire.beginTransmission(33);
+        Wire.write(SHOULDERMASK);
+        Wire.endTransmission();
+        delay(length);
+        Wire.beginTransmission(33);
+        Wire.write(0);
+        Wire.endTransmission();        
     } else if (zone=="ar_ch") {
-        // Wire.beginTransmission(32);
-        // Wire.write(0xFF);
-        // Wire.endTransmission();        
+        Wire.beginTransmission(32);
+        Wire.write(HUGMASK);
+        Wire.endTransmission();
+        delay(length);
+        Wire.beginTransmission(32);
+        Wire.write(0);
+        Wire.endTransmission();
     } else if (zone=="bk_st_ro") {
-        // Wire.beginTransmission(33);
-        // Wire.write(0xFF);
-        // Wire.endTransmission();
+        Wire.beginTransmission(33);
+        Wire.write(SOFTROBOMASK);
+        Wire.endTransmission();
+        delay(length);
+        Wire.beginTransmission(32);
+        Wire.write(0);
+        Wire.endTransmission();
     }
     
         

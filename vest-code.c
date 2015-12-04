@@ -54,11 +54,91 @@ int picker (String command)
     
     if(cmd == "tickle") {
         doTickle();
-    } else if (cmd == "all") {
-        
+    } else if (cmd == "creepy") {
+        doCreepy();  
+    } else if (cmd == "shouldermassage") {
+        activateShoulders();
+    } else if (cmd == "bulletshots") {
+        solenoidShot();
+    } else if (cmd == "hugging") {
+        hugMe();
     }
-    
+    //call of duty actions
+    else if (cmd == "ACT1") {
+        //start vibrators on right
+        digitalWrite(rightside1,HIGH);
+        digitalWrite(rightside2,HIGH);
+        digitalWrite(rightside3,HIGH);
+        delay(2000);
+        digitalWrite(rightside1,LOW);
+        digitalWrite(rightside2,LOW);
+        digitalWrite(rightside3,LOW);
+        Particle.publish("mZone","ft_rt_ht_vi,bk_rt_vi,2000");
+    }
+    else if (cmd=="ACT2") {
+        //left side everything
+        digitalWrite(leftside1,HIGH);
+        digitalWrite(leftside2,HIGH);
+        digitalWrite(leftside3,HIGH);
+        digitalWrite(leftfront1,HIGH);
+        digitalWrite(leftfront2,HIGH);
+        digitalWrite(leftfront3,HIGH);
+        Wire.beginTransmission(32);
+        Wire.write(ALLSOLENOIDMASK+SHOULDERMASK);
+        delay(1000);
+        Wire.write(0);
+        Wire.endTransmission();
+        digitalWrite(leftside1,LOW);
+        digitalWrite(leftside2,LOW);
+        digitalWrite(leftside3,LOW);
+        digitalWrite(leftfront1,LOW);
+        digitalWrite(leftfront2,LOW);
+        digitalWrite(leftfront3,LOW);
+        delay(500);
+        digitalWrite(leftside1,HIGH);
+        digitalWrite(leftside2,HIGH);
+        digitalWrite(leftside3,HIGH);
+        digitalWrite(leftfront1,HIGH);
+        digitalWrite(leftfront2,HIGH);
+        digitalWrite(leftfront3,HIGH);
+        delay(100);
+        digitalWrite(leftside1,LOW);
+        digitalWrite(leftside2,LOW);
+        digitalWrite(leftside3,LOW);
+        digitalWrite(leftfront1,LOW);
+        digitalWrite(leftfront2,LOW);
+        digitalWrite(leftfront3,LOW);
+        Particle.publish("mZone","ft_lt_ht_vi,ft_lt_vt_vi,bk_lt_vi,ft_lt_sl,ft_lt_cu,ft_rt_cu,1600")
+    }
     return 0;
+}
+
+void doCreepy()
+{
+    Wire.beginTransmission(33);
+    Wire.write(CREEPYMASK);
+    delay(200);
+    Wire.write(0);
+    Wire.endTransmission();
+}
+
+void activateShoulders()
+{
+    Wire.beginTransmission(33);
+    Wire.write(SHOULDERMASK);
+    delay(200);
+    Wire.write(0);
+    Wire.endTransmission();
+}
+
+void bulletshots()
+{
+    
+}
+
+void hugMe()
+{
+    
 }
 
 void doTickle()
@@ -115,7 +195,7 @@ int activateZone(String command)
     char buffer[200];
     sprintf(buffer,"%d",length);
     Particle.publish(zone,buffer);
-    if (zone=="front_left_horz_vibrators"){
+    if (zone=="ft_lt_ht_vi"){
         digitalWrite(leftfront1,HIGH);
         digitalWrite(leftfront2,HIGH);
         digitalWrite(leftfront3,HIGH);
@@ -123,7 +203,7 @@ int activateZone(String command)
         digitalWrite(leftfront1,LOW);
         digitalWrite(leftfront2,LOW);
         digitalWrite(leftfront3,LOW);
-    } if(zone=="front_left_vert_vibrators" || zone=="back_left_vibrators"){
+    } if(zone=="ft_lt_vt_vi" || zone=="bk_lt_vi"){
         digitalWrite(leftside1,HIGH);
         digitalWrite(leftside2,HIGH);
         digitalWrite(leftside3,HIGH);
@@ -131,7 +211,7 @@ int activateZone(String command)
         digitalWrite(leftside1,LOW);
         digitalWrite(leftside2,LOW);
         digitalWrite(leftside3,LOW);
-    } else if(zone=="front_right_horz_vibrators"){
+    } else if(zone=="ft_rt_ht_vi"){
         digitalWrite(rightfront1,HIGH);
         digitalWrite(rightfront2,HIGH);
         digitalWrite(rightfront3,HIGH);
@@ -139,7 +219,7 @@ int activateZone(String command)
         digitalWrite(rightfront1,LOW);
         digitalWrite(rightfront2,LOW);
         digitalWrite(rightfront3,LOW);
-    } else if(zone=="front_right_vert_vibrators" || zone=="back_right_vibrators"){
+    } else if(zone=="ft_rt_vt_vi" || zone=="bk_rt_vi"){
         digitalWrite(rightside1,HIGH);
         digitalWrite(rightside2,HIGH);
         digitalWrite(rightside3,HIGH);
@@ -147,27 +227,27 @@ int activateZone(String command)
         digitalWrite(rightside1,LOW);
         digitalWrite(rightside2,LOW);
         digitalWrite(rightside3,LOW);
-    } else if (zone=="front_left_sole") {
+    } else if (zone=="ft_lt_sl") {
         // Wire.beginTransmission(32);
         // Wire.write(0xFF);
         // Wire.endTransmission();
-    } else if (zone=="front_right_sole") {
+    } else if (zone=="ft_rt_sl") {
         // Wire.beginTransmission(33);
         // Wire.write(0xFF);
         // Wire.endTransmission();        
-    } else if (zone=="front_left_cuff") {
+    } else if (zone=="ft_lt_cu") {
         // Wire.beginTransmission(32);
         // Wire.write(0xFF);
         // Wire.endTransmission();        
-    } else if (zone=="front_right_cuff") {
+    } else if (zone=="ft_rt_cu") {
         // Wire.beginTransmission(33);
         // Wire.write(0xFF);
         // Wire.endTransmission();        
-    } else if (zone=="air_channel") {
+    } else if (zone=="ar_ch") {
         // Wire.beginTransmission(32);
         // Wire.write(0xFF);
         // Wire.endTransmission();        
-    } else if (zone=="back_soft_robotics") {
+    } else if (zone=="bk_st_ro") {
         // Wire.beginTransmission(33);
         // Wire.write(0xFF);
         // Wire.endTransmission();

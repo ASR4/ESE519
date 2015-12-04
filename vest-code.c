@@ -32,15 +32,31 @@ void setup() {
 }
 
 void loop() {
-    Wire.beginTransmission(32);
-    Wire.write(0xFF);
-    Wire.endTransmission();
+    // Wire.beginTransmission(32);
+    // Wire.write(0xFF);
+    // Wire.endTransmission();
 
 }
 
 int picker (String command)
 {
-    doTickle();
+    int ind1 = command.indexOf(",");
+    String cmd = command.substring(0,ind1);
+    int ind2 = command.indexOf(",",ind1+1);
+    if (ind2==0) {
+        ind2 = command.length();
+    }
+    int length = command.substring(ind1+1,ind2).toInt();
+    int offset = 0;
+    if(ind2<command.length()) {
+        offset = command.substring(ind2+1,command.length()).toInt();
+    }
+    
+    if(cmd == "tickle") {
+        doTickle();
+    } else if (cmd == "all") {
+        
+    }
     
     return 0;
 }
@@ -73,6 +89,8 @@ void doTickle()
     digitalWrite(rightside3,LOW);
     delay(shortlength);
 }
+
+
 
 int activateZone(String command)
 {
@@ -130,17 +148,29 @@ int activateZone(String command)
         digitalWrite(rightside2,LOW);
         digitalWrite(rightside3,LOW);
     } else if (zone=="front_left_sole") {
-        
+        // Wire.beginTransmission(32);
+        // Wire.write(0xFF);
+        // Wire.endTransmission();
     } else if (zone=="front_right_sole") {
-        
+        // Wire.beginTransmission(33);
+        // Wire.write(0xFF);
+        // Wire.endTransmission();        
     } else if (zone=="front_left_cuff") {
-        
+        // Wire.beginTransmission(32);
+        // Wire.write(0xFF);
+        // Wire.endTransmission();        
     } else if (zone=="front_right_cuff") {
-        
+        // Wire.beginTransmission(33);
+        // Wire.write(0xFF);
+        // Wire.endTransmission();        
     } else if (zone=="air_channel") {
-        
+        // Wire.beginTransmission(32);
+        // Wire.write(0xFF);
+        // Wire.endTransmission();        
     } else if (zone=="back_soft_robotics") {
-        
+        // Wire.beginTransmission(33);
+        // Wire.write(0xFF);
+        // Wire.endTransmission();
     }
     
         

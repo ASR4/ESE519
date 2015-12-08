@@ -13,10 +13,10 @@
 #define rightside3  D7
 
 #define ALLSOLENOIDMASK 0x07
-#define SHOULDERMASK 0x10
-#define CREEPYMASK 0x20
-#define SOFTROBOMASK 0x40
-#define HUGMASK 0x80
+#define SHOULDERMASK 0x08
+#define CREEPYMASK 0x10
+#define HUGMASK 0x10
+#define SOFTROBOMASK 0x00
 
 void setup() {
     Wire.begin();
@@ -37,9 +37,8 @@ void setup() {
 }
 
 void loop() {
-    // Wire.beginTransmission(32);
-    // Wire.write(0xFF);
-    // Wire.endTransmission();
+
+
 
 }
 
@@ -96,11 +95,11 @@ int picker (String command)
         digitalWrite(leftfront1,HIGH);
         digitalWrite(leftfront2,HIGH);
         digitalWrite(leftfront3,HIGH);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(ALLSOLENOIDMASK+SHOULDERMASK);
         Wire.endTransmission();
         delay(1000);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(0);
         Wire.endTransmission();
         digitalWrite(leftside1,LOW);
@@ -140,10 +139,10 @@ int picker (String command)
         digitalWrite(rightfront1,HIGH);
         digitalWrite(rightfront2,HIGH);
         digitalWrite(rightfront3,HIGH);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(ALLSOLENOIDMASK+SHOULDERMASK);
         Wire.endTransmission();
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(ALLSOLENOIDMASK+SHOULDERMASK);
         Wire.endTransmission();
         delay(400);
@@ -159,10 +158,10 @@ int picker (String command)
         digitalWrite(rightfront1,LOW);
         digitalWrite(rightfront2,LOW);
         digitalWrite(rightfront3,LOW);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(0);
         Wire.endTransmission();
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(0);
         Wire.endTransmission();
         
@@ -171,45 +170,45 @@ int picker (String command)
     {
         //death, all solenoids
         Particle.publish("mZone","ft_lt_sl,ft_rt_sl,600");
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(ALLSOLENOIDMASK);
         Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        delay(100);
-        Wire.beginTransmission(32);
-        Wire.write(0);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
-        Wire.write(0);
-        Wire.endTransmission();
-        delay(100);
-        Wire.beginTransmission(32);
-        Wire.write(ALLSOLENOIDMASK);
-        Wire.endTransmission();
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(ALLSOLENOIDMASK);
         Wire.endTransmission();
         delay(100);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(0);
         Wire.endTransmission();
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(0);
         Wire.endTransmission();
         delay(100);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(ALLSOLENOIDMASK);
         Wire.endTransmission();
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(ALLSOLENOIDMASK);
         Wire.endTransmission();
         delay(100);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(0);
         Wire.endTransmission();
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
+        Wire.write(0);
+        Wire.endTransmission();
+        delay(100);
+        Wire.beginTransmission(0x38);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        Wire.beginTransmission(0x39);
+        Wire.write(ALLSOLENOIDMASK);
+        Wire.endTransmission();
+        delay(100);
+        Wire.beginTransmission(0x38);
+        Wire.write(0);
+        Wire.endTransmission();
+        Wire.beginTransmission(0x39);
         Wire.write(0);
         Wire.endTransmission();
         delay(100);
@@ -224,12 +223,12 @@ int picker (String command)
         digitalWrite(rightfront1,HIGH);
         digitalWrite(rightfront2,HIGH);
         digitalWrite(rightfront3,HIGH);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(SOFTROBOMASK);
         Wire.endTransmission();
         
         delay(300);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(0);
         Wire.endTransmission();
         digitalWrite(leftfront1,LOW);
@@ -245,11 +244,11 @@ int picker (String command)
 void doCreepy()
 {
     Particle.publish("mZone","neck_ar,200");
-    Wire.beginTransmission(33);
+    Wire.beginTransmission(0x38);
     Wire.write(CREEPYMASK);
     Wire.endTransmission();
     delay(200);
-    Wire.beginTransmission(33);
+    Wire.beginTransmission(0x38);
     Wire.write(0);
     Wire.endTransmission();
 }
@@ -371,51 +370,52 @@ int activateZone(String command)
         digitalWrite(rightside2,LOW);
         digitalWrite(rightside3,LOW);
     } else if (zone=="ft_lt_sl") {
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(ALLSOLENOIDMASK);
         Wire.endTransmission();
         delay(length);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(0);
         Wire.endTransmission();
     } else if (zone=="ft_rt_sl") {
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(ALLSOLENOIDMASK);
         Wire.endTransmission(); 
         delay(length);
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(0);
         Wire.endTransmission();
     } else if (zone=="ft_lt_cu") {
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(SHOULDERMASK);
         Wire.endTransmission(); 
         delay(length);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x38);
         Wire.write(0);
         Wire.endTransmission();
     } else if (zone=="ft_rt_cu") {
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(SHOULDERMASK);
         Wire.endTransmission();
         delay(length);
-        Wire.beginTransmission(33);
+        Wire.beginTransmission(0x39);
         Wire.write(0);
         Wire.endTransmission();        
     } else if (zone=="ar_ch") {
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x39);
         Wire.write(HUGMASK);
         Wire.endTransmission();
         delay(length);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x39);
         Wire.write(0);
         Wire.endTransmission();
-    } else if (zone=="bk_st_ro") {
-        Wire.beginTransmission(33);
+    } else if (zone=="") { //this is for the neck creepy
+    } else if (zone=="bk_st_ro") { //this should go away
+        Wire.beginTransmission(0x39);
         Wire.write(SOFTROBOMASK);
         Wire.endTransmission();
         delay(length);
-        Wire.beginTransmission(32);
+        Wire.beginTransmission(0x39);
         Wire.write(0);
         Wire.endTransmission();
     }

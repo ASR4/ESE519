@@ -11,6 +11,11 @@
 #define Ltri2 A2
 #define Lelbow A1
 
+TCPServer server = TCPServer(23);
+TCPClient client;
+bool connected=false;
+String readBuffer;
+
 void setup() {
     pinMode(hand1,OUTPUT);
     pinMode(hand2,OUTPUT);
@@ -24,19 +29,43 @@ void setup() {
     pinMode(Ltri1,OUTPUT);
     pinMode(Ltri2,OUTPUT);
     pinMode(Lelbow,OUTPUT);
+    pinMode(A0,OUTPUT);
+    digitalWrite(A0,LOW);
     Particle.function("function",picker);
     Particle.function("zone",activateZone);
 }
 
-void loop() {
-    // doCreepy();
-    // delay(1000);
-    // for (int i=0;i<5;i++) {
-    //     doAll();
-    //     delay(500);
-    // }
-        
+void loop()
+{
+  if (client.connected()) {
+    if (!connected) {
+        Particle.publish("TCPServer","connected");
+        connected=true;
+    }
+    // echo all available bytes back to the client
+    while (client.available()) {
+        char tmp = client.read();
+        switch(tmp) {
+            case 0:
+            case '\n':
+            case '\r':
+            if(readBuffer != "")
+                activateZone(readBuffer);
+            readBuffer = "";
+            break;
+            default:
+            readBuffer += tmp;
+        }
+    }
+  } else {
+    Particle.publish("sleeveIP",String(WiFi.localIP()));
+    // if no client is yet connected, check for a new connection
+    client = server.available();
+    connected = false;
     
+  }
+  if(!connected)
+    delay(1000);
 }
 
 int picker(String command) {
@@ -46,6 +75,7 @@ int picker(String command) {
         doAll();
     return 0;
 }
+
 
 int activateZone(String command)
 {
@@ -104,8 +134,33 @@ int activateZone(String command)
         digitalWrite(Lwrist,HIGH);
         delay(length);
         digitalWrite(Lwrist,LOW);
+    } else if (zone=="sleeve_lt") {
+    digitalWrite(Lelbow,HIGH);
+    digitalWrite(Ltri2,HIGH);
+    digitalWrite(Ltri1,HIGH);
+    digitalWrite(Lwrist,HIGH);
+    digitalWrite(Lhand,HIGH);
+    delay(length);
+    digitalWrite(Lelbow,LOW);
+    digitalWrite(Ltri2,LOW);
+    digitalWrite(Ltri1,LOW);
+    digitalWrite(Lwrist,LOW);
+    digitalWrite(Lhand,LOW);
+    } else if (zone=="sleeve_rt") {
+            digitalWrite(hand1,HIGH);
+    digitalWrite(hand2,HIGH);
+    digitalWrite(elbow1,HIGH);
+    digitalWrite(elbow2,HIGH);
+    digitalWrite(tricep1,HIGH);
+    digitalWrite(tricep2,HIGH);
+    delay(length);
+    digitalWrite(hand1,LOW);
+    digitalWrite(hand2,LOW);
+    digitalWrite(tricep1,LOW);
+    digitalWrite(tricep2,LOW);
+    digitalWrite(elbow1,LOW);
+    digitalWrite(elbow2,LOW);
     }
-        
     
     return 0;
     
